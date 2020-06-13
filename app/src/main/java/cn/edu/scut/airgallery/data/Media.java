@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
+import cn.edu.scut.airgallery.util.ArrayUtils;
 import cn.edu.scut.airgallery.util.StringUtils;
 
 // TODO Calvin: Separate out the logic here
@@ -31,11 +32,10 @@ public class Media implements  CursorHandler, Parcelable {
             MediaStore.Images.Media.ORIENTATION
     };
 
-//    private static final int CURSOR_POS_DATA = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.DATA);
-//    private static final int CURSOR_POS_DATE_TAKEN = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.DATE_TAKEN);
-//    private static final int CURSOR_POS_MIME_TYPE = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.MIME_TYPE);
-//    private static final int CURSOR_POS_SIZE = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.SIZE);
-//    private static final int CURSOR_POS_ORIENTATION = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.ORIENTATION);
+    private static final int CURSOR_POS_DATA = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.DATA);
+    private static final int CURSOR_POS_DATE_TAKEN = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.DATE_TAKEN);
+    private static final int CURSOR_POS_SIZE = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.SIZE);
+    private static final int CURSOR_POS_ORIENTATION = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.ORIENTATION);
 
     private String path = null;
     private long dateModified = -1;
@@ -73,11 +73,17 @@ public class Media implements  CursorHandler, Parcelable {
     }
 
     public Media(@NotNull Cursor cur) {
-        this.path = cur.getString(Integer.parseInt(MediaStore.Images.Media.DATA));
-        this.dateModified = cur.getLong(Integer.parseInt(MediaStore.Images.Media.DATE_TAKEN));
+        //this.path = cur.getString(Integer.parseInt(MediaStore.Images.Media.DATA));
+        //this.dateModified = cur.getLong(Integer.parseInt(MediaStore.Images.Media.DATE_TAKEN));
 //        this.mimeType = cur.getString(CURSOR_POS_MIME_TYPE);
-        this.size = cur.getLong(Integer.parseInt(MediaStore.Images.Media.SIZE));
-        this.orientation = cur.getInt(Integer.parseInt(MediaStore.Images.Media.ORIENTATION));
+        //this.size = cur.getLong(Integer.parseInt(MediaStore.Images.Media.SIZE));
+        //this.orientation = cur.getInt(Integer.parseInt(MediaStore.Images.Media.ORIENTATION));
+
+        this.path = cur.getString(CURSOR_POS_DATA);
+        this.dateModified = cur.getLong(CURSOR_POS_DATE_TAKEN);
+        //this.mimeType = cur.getString(CURSOR_POS_MIME_TYPE);
+        this.size = cur.getLong(CURSOR_POS_SIZE);
+        this.orientation = cur.getInt(CURSOR_POS_ORIENTATION);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package cn.edu.scut.airgallery.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -17,13 +18,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-
-import butterknife.BindView;
 import cn.edu.scut.airgallery.R;
 
+import cn.edu.scut.airgallery.data.Album;
+import cn.edu.scut.airgallery.ui.albums.AlbumsFragment;
 import cn.edu.scut.airgallery.util.PermissionUtils;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements AlbumsFragment.AlbumClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private final int EXTERNAL_STORAGE_PERMISSIONS = 12;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity  {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_albums, R.id.nav_medias, R.id.nav_about)
+                R.id.nav_albums, R.id.nav_settings, R.id.nav_about)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -72,5 +73,10 @@ public class MainActivity extends AppCompatActivity  {
                 || super.onSupportNavigateUp();
     }
 
-
+    @Override
+    public void onAlbumClick(Album album) {
+        Intent intent = new Intent(getApplicationContext(), RvMediaActivity.class);
+        intent.putExtra(RvMediaActivity.BUNDLE_ALBUM, album);
+        startActivity(intent);
+    }
 }

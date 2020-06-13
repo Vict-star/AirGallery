@@ -33,12 +33,9 @@ import cn.edu.scut.airgallery.util.StringUtils;
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder> {
 
     private List<Album> albums;
-
     private int selectedCount = 0;
-
     private ActionsListener actionsListener;
-
-    private boolean isSelecting;
+    private boolean isSelecting = false;
 
     public AlbumsAdapter(Context context, ActionsListener actionsListener) {
         super();
@@ -260,20 +257,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         CardView card;
         @BindView(R.id.album_preview)
         AppCompatImageView picture;
-//        @BindView(R.id.album_preview)
-//        ImageView picture;
-        //@BindView(R.id.ll_album_info)
-        //View footer;
-//        @BindView(R.id.ll_media_count)
-//        View llCount;
         @BindView(R.id.album_name)
         TextView name;
         @BindView(R.id.album_media_count)
         TextView nMedia;
-//        @BindView(R.id.album_media_label)
-//        TextView mediaLabel;
-//        @BindView(R.id.album_path)
-//        TextView path;
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

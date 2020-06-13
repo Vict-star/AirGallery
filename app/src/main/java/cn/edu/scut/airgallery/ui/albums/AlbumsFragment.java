@@ -26,7 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class AlbumsFragment extends Fragment {
+public class AlbumsFragment extends Fragment implements ActionsListener{
     public static final String TAG = "AlbumsFragment";
 
     @BindView(R.id.albums) RecyclerView rv;
@@ -99,15 +99,25 @@ public class AlbumsFragment extends Fragment {
         rv.addItemDecoration(spacingDecoration);
         rv.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
 
-        adapter = new AlbumsAdapter(getContext(), (ActionsListener) listener);
+        adapter = new AlbumsAdapter(getContext(), this);
         rv.setAdapter(adapter);
 
         return root;
     }
 
-
+    @Override
     public void onItemSelected(int position) {
         if (listener != null) listener.onAlbumClick(adapter.get(position));
+    }
+
+    @Override
+    public void onSelectMode(boolean selectMode) {
+
+    }
+
+    @Override
+    public void onSelectionCountChanged(int selectionCount, int totalCount) {
+
     }
 
 }
