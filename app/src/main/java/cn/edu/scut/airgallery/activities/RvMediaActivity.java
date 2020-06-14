@@ -50,11 +50,9 @@ public class RvMediaActivity extends AppCompatActivity implements ActionsListene
 
         album = getIntent().getParcelableExtra(BUNDLE_ALBUM);
 
-        System.out.println(album.getPath());
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(album.getName());
-        toolbar.setNavigationOnClickListener(v -> goBackToAlbums());
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         //设置rv的item间隔
         int spanCount = columnsCount();
@@ -79,11 +77,6 @@ public class RvMediaActivity extends AppCompatActivity implements ActionsListene
                         throwable -> {
                             throwable.printStackTrace();
                         });
-    }
-
-    public void goBackToAlbums(){
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
     }
 
     public void setUpColumns() {

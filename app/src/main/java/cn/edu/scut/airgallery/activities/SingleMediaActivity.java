@@ -55,7 +55,7 @@ public class SingleMediaActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-        toolbar.setNavigationOnClickListener(v -> goBackToMedias());
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
         button.setOnClickListener(v -> doodle());
 
         loadAlbum(getIntent());
@@ -108,11 +108,6 @@ public class SingleMediaActivity extends AppCompatActivity {
                     break;
             }
         }
-    }
-
-    public void goBackToMedias() {
-        startActivity(new Intent(getApplicationContext(), RvMediaActivity.class));
-        finish();
     }
 
     public Media getCurrentMedia() {
