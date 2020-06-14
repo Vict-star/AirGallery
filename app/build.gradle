@@ -65,4 +65,9 @@ dependencies {
     implementation 'com.mikepenz:fontawesome-typeface:4.7.0.2@aar'
     //ui
     implementation 'com.github.HoraApps:Liz:-SNAPSHOT'
+    //doodle
+    implementation 'com.github.1993hzw:Doodle:5.5.3'
+    //util
+    implementation "com.orhanobut:hawk:2.0.1"
+
 }

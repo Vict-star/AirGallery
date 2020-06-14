@@ -6,10 +6,13 @@
     <string name="nav_header_subtitle">www.scut.edu.cn</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-about
+
     <string name="menu_albums">本地目录</string>
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
 
     <string name="home_second">Home Second</string>
+
+    <string name="new_file_created">新图片已保存</string>
+    <string name="preference_internal_uri_extsdcard_photos">uri_extsdcard_photos</string>
 </resources>

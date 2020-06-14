@@ -18,9 +18,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.File;
+
 import cn.edu.scut.airgallery.R;
 
 import cn.edu.scut.airgallery.data.Album;
+import cn.edu.scut.airgallery.data.StorageHelper;
 import cn.edu.scut.airgallery.ui.albums.AlbumsFragment;
 import cn.edu.scut.airgallery.util.PermissionUtils;
 

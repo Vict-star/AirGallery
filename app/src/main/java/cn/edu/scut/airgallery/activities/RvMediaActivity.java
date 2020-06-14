@@ -1,9 +1,7 @@
 package cn.edu.scut.airgallery.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -47,11 +45,12 @@ public class RvMediaActivity extends AppCompatActivity implements ActionsListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_rv_media);
+        ButterKnife.bind(this);
 
         album = getIntent().getParcelableExtra(BUNDLE_ALBUM);
 
-        setContentView(R.layout.activity_rv_media);
-        ButterKnife.bind(this);
+        System.out.println(album.getPath());
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(album.getName());
@@ -119,7 +118,15 @@ public class RvMediaActivity extends AppCompatActivity implements ActionsListene
 
     @Override
     public void onMediaClick(Album album, ArrayList<Media> media, int position){
-        //
+        Intent intent = new Intent(getApplicationContext(), SingleMediaActivity.class);
+        intent.putExtra(SingleMediaActivity.EXTRA_ARGS_ALBUM, album);
+        try{
+            intent.putExtra(SingleMediaActivity.EXTRA_ARGS_MEDIA, media);
+            intent.putExtra(SingleMediaActivity.EXTRA_ARGS_POSITION, position);
+            startActivity(intent);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
