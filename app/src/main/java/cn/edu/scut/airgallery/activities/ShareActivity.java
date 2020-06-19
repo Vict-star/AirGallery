@@ -2,15 +2,12 @@ package cn.edu.scut.airgallery.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +27,7 @@ import cn.edu.scut.airgallery.R;
 import cn.edu.scut.airgallery.transfer.Client;
 import cn.edu.scut.airgallery.transfer.PermissionUtils;
 import cn.edu.scut.airgallery.transfer.ScanDeviceTool;
+
 import static cn.edu.scut.airgallery.transfer.Client.checkConnect;
 
 public class ShareActivity extends AppCompatActivity {
@@ -118,10 +117,10 @@ public class ShareActivity extends AppCompatActivity {
                 }
             }
         };
-        //ScanDevice();
+        ScanDevice();
     }
 
-    private void ScanDevice() {
+    private boolean ScanDevice() {
         txtEt.append(". . .");
         new Thread(){
             @Override
@@ -129,7 +128,9 @@ public class ShareActivity extends AppCompatActivity {
                 scanDeviceTool = new ScanDeviceTool();
                 List<String> pList = scanDeviceTool.scan();
                 if(pList != null && pList.size() >0) {
+                    int port = Integer.parseInt(txtPort.getText().toString());
                     Message.obtain(handler, 0, "扫描成功，发现"+pList.size()+"个设备：").sendToTarget();
+                    final Socket[] socket = {null};
                     for (final String ip : pList) {/*TODO:如果找到连接就应该终止尝试的*/
                         Message.obtain(handler, 0, "尝试连接:"+ip+"……").sendToTarget();
                         /*TODO:连接逻辑*/
@@ -148,10 +149,12 @@ public class ShareActivity extends AppCompatActivity {
                             }
                         }.start();
                     }
-                    Message.obtain(handler, 0, "连接失败,请和对方在同一局域网环境下再次尝试!或手动输入对方的ip地址。").sendToTarget();
                 }
             }
         }.start();
+        if(txtIP.getText().toString() == null || txtIP.getText().toString()=="")
+            Message.obtain(handler, 0, "如无连接成功设备，可手动填写Ip发送！").sendToTarget();
+        return true;
     }
 
 

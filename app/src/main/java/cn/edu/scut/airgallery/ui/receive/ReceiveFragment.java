@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,6 +43,7 @@ public class ReceiveFragment extends Fragment {
 
     private int port;
     private Handler handler;
+    private String SaveFolder = "/sdcard/Shared/";;
 
     public int getPort() {
         return port;
@@ -83,11 +85,11 @@ public class ReceiveFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_receive, container, false);
         ButterKnife.bind(this, root);
-
+        createMkdir(SaveFolder);
         btnReceive.setOnClickListener(v -> {
             port = Integer.parseInt(txtPort.getText().toString());
             Message.obtain(handler, 1, port).sendToTarget();
-            Server.startServer(port, Environment.getExternalStorageDirectory().getPath()+"/Shared",handler);
+            Server.startServer(port, Environment.getExternalStorageDirectory().getPath()+"/Shared/",handler);
         });
         tvMsg.setText("本机IP：" + GetIpAddress());
 
@@ -104,4 +106,10 @@ public class ReceiveFragment extends Fragment {
                 ((i >> 24 ) & 0xFF );
     }
 
+    public static void createMkdir(String folderPath) {
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+    }
 }

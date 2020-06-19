@@ -68,7 +68,7 @@ public class Server extends Thread {
                 // 文件名和长度
                 String fileName = dis.readUTF();
                 long fileLength = dis.readLong();
-                fos = new FileOutputStream(folderPath,false);
+                fos = new FileOutputStream(folderPath+fileName,false);
 
 
                 Log.v("Server","======== Start receiving ========");
