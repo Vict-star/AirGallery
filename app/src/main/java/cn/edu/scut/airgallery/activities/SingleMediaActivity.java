@@ -1,5 +1,6 @@
 package cn.edu.scut.airgallery.activities;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,10 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Surface;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,9 +35,7 @@ import cn.edu.scut.airgallery.data.Album;
 import cn.edu.scut.airgallery.data.Media;
 import cn.edu.scut.airgallery.data.MediaHelper;
 import cn.edu.scut.airgallery.data.StorageHelper;
-import cn.edu.scut.airgallery.fragments.BaseMediaFragment;
 import cn.edu.scut.airgallery.util.AlertDialogsHelper;
-import cn.edu.scut.airgallery.util.Measure;
 import cn.edu.scut.airgallery.util.StringUtils;
 import cn.edu.scut.airgallery.views.HackyViewPager;
 import cn.hzw.doodle.DoodleActivity;
@@ -50,7 +46,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SingleMediaActivity extends AppCompatActivity implements BaseMediaFragment.MediaTapListener{
+public class SingleMediaActivity extends AppCompatActivity {
     public static final String TAG = "SingleMediaActivity";
 
     private static final String ISLOCKED_ARG = "isLocked";
@@ -59,7 +55,6 @@ public class SingleMediaActivity extends AppCompatActivity implements BaseMediaF
     public static final String EXTRA_ARGS_ALBUM = "args_album";
     public static final String EXTRA_ARGS_MEDIA = "args_media";
     public static final String EXTRA_ARGS_POSITION = "args_position";
-    private boolean fullScreenMode = false;
 
     @BindView(R.id.photos_pager)
     HackyViewPager mViewPager;
@@ -72,7 +67,6 @@ public class SingleMediaActivity extends AppCompatActivity implements BaseMediaF
     private ArrayList<Media> media;
     private int position;
     private MediaPagerAdapter adapter;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,7 +122,6 @@ public class SingleMediaActivity extends AppCompatActivity implements BaseMediaF
     private void initUi()
     {
         setSupportActionBar(toolbar);
-        toolbar.bringToFront();
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
@@ -257,56 +250,8 @@ public class SingleMediaActivity extends AppCompatActivity implements BaseMediaF
         getSupportActionBar().setTitle(getString(R.string.of, position + 1, adapter.getCount()));
     }
 
-    @Override
-    public void onViewTapped() {
-        toggleSystemUI();
-    }
-
     public Media getCurrentMedia() {
         return media.get(position);
-    }
-
-    public void toggleSystemUI() {
-        if (fullScreenMode) showSystemUI();
-        else hideSystemUI();
-    }
-
-    private void hideSystemUI() {
-        runOnUiThread(() -> {
-            toolbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateInterpolator())
-                    .setDuration(200).start();
-
-            getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-                @Override
-                public void onSystemUiVisibilityChange(int visibility) {
-                    Log.wtf(TAG, "ui changed: " + visibility);
-                }
-            });
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
-            fullScreenMode = true;
-        });
-    }
-
-    private void showSystemUI() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                toolbar.animate().translationY(Measure.getStatusBarHeight(getResources())).setInterpolator(new DecelerateInterpolator())
-                        .setDuration(240).start();
-
-                getWindow().getDecorView().setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-                fullScreenMode = false;
-            }
-        });
     }
 
 }

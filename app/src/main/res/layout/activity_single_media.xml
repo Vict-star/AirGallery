@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/PhotoPager_Layout"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:theme="@style/ThemeOverlay.AppCompat">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:windowActionBarOverlay="true"/>
-    <cn.edu.scut.airgallery.views.HackyViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/photos_pager"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <cn.edu.scut.airgallery.views.HackyViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/photos_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
