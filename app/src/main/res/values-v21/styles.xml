@@ -1,8 +1,9 @@
-<resources>
+<resources xmlns:ns1="http://schemas.android.com/apk/res-auto">
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
 </resources>

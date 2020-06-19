@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import cn.edu.scut.airgallery.util.StringUtils;
 
 public class Album implements CursorHandler, Parcelable {
+
     public static final long ALL_MEDIA_ALBUM_ID = 8000;
     private String name, path;
     private long id = -1, dateModified;
@@ -19,8 +20,7 @@ public class Album implements CursorHandler, Parcelable {
     private String coverpath;
 
     private boolean selected = false;
-//    public AlbumSettings settings = null;
-//    private Media lastMedia = null;
+
 
     public Album(String path, String name) {
         this.name = name;
@@ -65,10 +65,6 @@ public class Album implements CursorHandler, Parcelable {
                 "max(" + MediaStore.Images.Media.DATE_MODIFIED + ")"
         };
     }
-
-//    public void setLastMedia(Media lastMedia) {
-//        this.lastMedia = lastMedia;
-//    }
 
     @Override
     public Album handle(Cursor cur) {
@@ -116,22 +112,6 @@ public class Album implements CursorHandler, Parcelable {
     public String getCover(){
         return coverpath;
     }
-//    public Media getCover() {
-//        if (hasCover())
-//            return new Media(settings.coverPath);
-//        if (lastMedia != null)
-//            return lastMedia;
-//        // TODO: 11/20/16 how should i handle this?
-//        return new Media();
-//    }
-
-//    public void setLastMedia(Media lastMedia) {
-//        this.lastMedia = lastMedia;
-//    }
-
-//    public void setCover(String path) {
-//        settings.coverPath = path;
-//    }
 
     public long getId() {
         return  this.id;
@@ -198,8 +178,6 @@ public class Album implements CursorHandler, Parcelable {
     private boolean found_id_album = false;
 
     @Deprecated
-
-
     @Override
     public int describeContents() {
         return 0;
@@ -236,8 +214,4 @@ public class Album implements CursorHandler, Parcelable {
             return new Album[size];
         }
     };
-
-//    public Media getLastMedia() {
-//        return lastMedia;
-//    }
 }

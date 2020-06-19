@@ -8,30 +8,26 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <RelativeLayout
-        android:id="@+id/PhotoPager_Layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.Toolbar
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <include
                 android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:navigationIcon="@drawable/ic_back"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="涂鸦"/>
-        </LinearLayout>
+                layout="@layout/toolbar" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-    </RelativeLayout>
+        <cn.edu.scut.airgallery.views.HackyViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/photos_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
 </androidx.drawerlayout.widget.DrawerLayout>

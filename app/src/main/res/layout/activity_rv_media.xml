@@ -21,13 +21,9 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
+            <include
                 android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:navigationIcon="@drawable/ic_back"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                layout="@layout/toolbar" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/medias"

@@ -34,7 +34,6 @@ import cn.edu.scut.airgallery.R;
 public class StorageHelper {
 
     private static final String TAG = "StorageHelper";
-    private static final String PRIMARY_VOLUME_NAME = "primary";
 
     public static void scanFile(Context context, String[] path) {
         MediaScannerConnection.scanFile(context.getApplicationContext(), path, null, null);
@@ -57,9 +56,7 @@ public class StorageHelper {
         }
         boolean result = file.canWrite();
 
-        // Ensure that file is not created during this process.
         if (!isExisting) {
-            //noinspection ResultOfMethodCallIgnored
             file.delete();
         }
 
@@ -88,9 +85,7 @@ public class StorageHelper {
         try {
             inStream = new FileInputStream(source);
 
-            // First try the normal way
             if (isWritable(target)) {
-                // standard way
                 FileChannel inChannel = new FileInputStream(source).getChannel();
                 FileChannel outChannel = new FileOutputStream(target).getChannel();
                 inChannel.transferTo(0, inChannel.size(), outChannel);
@@ -99,23 +94,20 @@ public class StorageHelper {
                 try { outChannel.close(); } catch (Exception ignored) { }
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    //inStream = context.getContentResolver().openInputStream(Uri.fromFile(source));
-                    //outStream = context.getContentResolver().openOutputStream(Uri.fromFile(target));
                     if (isFileOnSdCard(context, source)) {
                         DocumentFile sourceDocument = getDocumentFile(context, source, false, false);
                         if (sourceDocument != null) {
                             inStream = context.getContentResolver().openInputStream(sourceDocument.getUri());
                         }
                     }
-                    // Storage Access Framework
+
                     DocumentFile targetDocument = getDocumentFile(context, target, false, false);
                     if (targetDocument != null) {
                         outStream = context.getContentResolver().openOutputStream(targetDocument.getUri());
                     }
                 }
                 else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-                    // TODO: 13/08/16 test this
-                    // Workaround for Kitkat ext SD card
+
                     Uri uri = getUriFromFile(context,target.getAbsolutePath());
                     if (uri != null) {
                         outStream = context.getContentResolver().openOutputStream(uri);
@@ -123,8 +115,7 @@ public class StorageHelper {
                 }
 
                 if (outStream != null) {
-                    // Both for SAF and for Kitkat, write to output stream.
-                    byte[] buffer = new byte[4096]; // MAGIC_NUMBER
+                    byte[] buffer = new byte[4096];
                     int bytesRead;
                     while ((bytesRead = inStream.read(buffer)) != -1) outStream.write(buffer, 0, bytesRead);
                     success = true;
@@ -208,7 +199,6 @@ public class StorageHelper {
     }
 
 
-
     /**
      * Delete all files in a folder.
      *
@@ -247,9 +237,6 @@ public class StorageHelper {
     public static void deleteFile(Context context, @NonNull final File file) throws ProgressException {
         ErrorCause error = new ErrorCause(file.getName());
 
-        //W/DocumentFile: Failed getCursor: java.lang.IllegalArgumentException: Failed to determine if A613-F0E1:.android_secure is child of A613-F0E1:: java.io.FileNotFoundException: Missing file for A613-F0E1:.android_secure at /storage/sdcard1/.android_secure
-        // First try the normal deletion.
-
         boolean success = false;
 
         try {
@@ -258,14 +245,12 @@ public class StorageHelper {
             error.addCause(e.getLocalizedMessage());
         }
 
-        // Try with Storage Access Framework.
         if (!success && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             DocumentFile document = getDocumentFile(context, file, false, false);
             success = document != null && document.delete();
             error.addCause("Failed SAF");
         }
 
-        // Try the Kitkat workaround.
         if (!success && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             ContentResolver resolver = context.getContentResolver();
 
@@ -286,48 +271,6 @@ public class StorageHelper {
         if (success) scanFile(context, new String[]{file.getPath()});
         else throw new ProgressException(error);
     }
-
-    /**
-     * Delete a folder.
-     *
-     * @param file The folder name.
-     * @return true if successful.
-     */
-    public static boolean rmdir(Context context, @NonNull final File file) {
-
-        if(!file.exists() && !file.isDirectory()) return false;
-
-        String[] fileList = file.list();
-
-        if(fileList != null && fileList.length > 0)
-            // Delete only empty folder.
-            return false;
-
-        // Try the normal way
-        if (file.delete()) return true;
-
-
-        // Try with Storage Access Framework.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            DocumentFile document = getDocumentFile(context, file, true, true);
-            return document != null && document.delete();
-        }
-
-        // Try the Kitkat workaround.
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-            ContentResolver resolver = context.getContentResolver();
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
-            resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-            // Delete the created entry, such that content provider will delete the file.
-            resolver.delete(MediaStore.Files.getContentUri("external"), MediaStore.MediaColumns.DATA + "=?",
-                    new String[] {file.getAbsolutePath()});
-        }
-
-        return !file.exists();
-    }
-
 
     /**
      * Get a DocumentFile corresponding to the given file (for writing on ExtSdCard on Android 5). If the file is not

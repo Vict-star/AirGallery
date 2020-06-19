@@ -13,10 +13,6 @@ import io.reactivex.Observable;
 
 public class CPHelper {
 
-//    public static Observable<Album> getAlbums(Context context, boolean hidden, ArrayList<String> excluded ) {
-//        return getAlbums(context);
-//    }
-
     private static String getHavingCluause(int excludedCount){
 
         if (excludedCount == 0)
@@ -30,13 +26,9 @@ public class CPHelper {
         for (int i = 1; i < excludedCount; i++)
             res.append(" AND ")
                     .append(MediaStore.Images.Media.DATA)
-                    .append(" NOT LIKE ?");
-
-        // NOTE: dont close ths parenthesis it will be closed by ContentResolver
-        //res.append(")");
+                    .append(" NOT LIKE ?");;
 
         return res.toString();
-
     }
 
     public static Observable<Album> getAlbums(Context context) {

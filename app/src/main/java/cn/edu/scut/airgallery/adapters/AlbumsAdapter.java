@@ -142,7 +142,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
                     iter.remove();
             }
         }
-
         notifyDataSetChanged();
     }
 
@@ -158,9 +157,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         for (Album m : this.albums) {
             c += m.isSelected() ? 1 : 0;
         }
-
         this.selectedCount = c;
-
         if (this.selectedCount == 0) stopSelection();
         else {
             this.actionsListener.onSelectionCountChanged(selectedCount, albums.size());
@@ -168,7 +165,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
     }
 
     public boolean clearSelected() {
-
         boolean changed = true;
         for (int i = 0; i < albums.size(); i++) {
             boolean b = albums.get(i).setSelected(false);
@@ -176,7 +172,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
                 notifyItemChanged(i);
             changed &= b;
         }
-
         selectedCount = 0;
         stopSelection();
         return changed;
@@ -206,14 +201,12 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final AlbumsAdapter.ViewHolder holder, int position) {
-        // TODO Calvin: Major Refactor - No business logic here.
         Album a = albums.get(position);
 
         RequestOptions options = new RequestOptions()
                 .format(DecodeFormat.PREFER_ARGB_8888)
                 .centerCrop()
                 .error(R.drawable.ic_error)
-                //.animate(R.anim.fade_in)//TODO:DONT WORK WELL
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
 
         Log.v("path",a.getCover());

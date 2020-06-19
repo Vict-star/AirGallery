@@ -3,7 +3,6 @@ package cn.edu.scut.airgallery.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,12 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.io.File;
-
 import cn.edu.scut.airgallery.R;
-
 import cn.edu.scut.airgallery.data.Album;
-import cn.edu.scut.airgallery.data.StorageHelper;
 import cn.edu.scut.airgallery.ui.albums.AlbumsFragment;
 import cn.edu.scut.airgallery.util.PermissionUtils;
 
@@ -37,9 +32,11 @@ public class MainActivity extends AppCompatActivity implements AlbumsFragment.Al
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //设置工具栏
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //设置浮动按钮
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> Snackbar.make(view, "Coming soon!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
@@ -48,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AlbumsFragment.Al
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_albums, R.id.nav_settings, R.id.nav_about)
+                R.id.nav_albums, R.id.nav_receive, R.id.nav_about)
                 .setDrawerLayout(drawer)
                 .build();
 

@@ -52,6 +52,7 @@ public class RvMediaActivity extends AppCompatActivity implements ActionsListene
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(album.getName());
+        toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         //设置rv的item间隔
@@ -94,7 +95,7 @@ public class RvMediaActivity extends AppCompatActivity implements ActionsListene
         return 3;
     }
 
-        @Override
+    @Override
     public void onItemSelected(int position) {
         onMediaClick(RvMediaActivity.this.album, adapter.getMedia(), position);
     }

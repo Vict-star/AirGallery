@@ -8,11 +8,24 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_albums">本地目录</string>
-    <string name="menu_settings">设置</string>
+    <string name="menu_receive">接收文件</string>
     <string name="menu_about">关于</string>
 
     <string name="home_second">Home Second</string>
 
     <string name="new_file_created">新图片已保存</string>
     <string name="preference_internal_uri_extsdcard_photos">uri_extsdcard_photos</string>
+    <string name="of">%1$d / %2$d</string>
+
+    <string name="action_edit">编辑</string>
+    <string name="action_doodle">涂鸦</string>
+    <string name="action_share">分享</string>
+    <string name="action_delete">删除</string>
+
+    <string name="delete">删除</string>
+    <string name="delete_photo_message">确定删除此文件？</string>
+    <string name="cancel">取消</string>
+
+    <string name="share">分享</string>
+
 </resources>

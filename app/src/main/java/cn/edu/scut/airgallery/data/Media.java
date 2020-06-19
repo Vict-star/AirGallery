@@ -17,11 +17,6 @@ import java.io.File;
 import cn.edu.scut.airgallery.util.ArrayUtils;
 import cn.edu.scut.airgallery.util.StringUtils;
 
-// TODO Calvin: Separate out the logic here
-
-/** Ideally, we should have separate data classes for images, videos & gifs
- *  Base class can be Media, and others should extend
- *  Try to separate out Database logic and projections from this class */
 public class Media implements  CursorHandler, Parcelable {
 
     private static final String[] sProjection = new String[] {
@@ -39,7 +34,6 @@ public class Media implements  CursorHandler, Parcelable {
 
     private String path = null;
     private long dateModified = -1;
-    //    private String mimeType = MimeTypeUtils.UNKNOWN_MIME_TYPE;
     private int orientation = 0;
 
     private String uriString = null;
@@ -53,13 +47,11 @@ public class Media implements  CursorHandler, Parcelable {
     public Media(String path, long dateModified) {
         this.path = path;
         this.dateModified = dateModified;
-//        this.mimeType = MimeTypeUtils.getMimeType(path);
     }
 
     public Media(File file) {
         this(file.getPath(), file.lastModified());
         this.size = file.length();
-//        this.mimeType = MimeTypeUtils.getMimeType(path);
     }
 
     public Media(String path) {
@@ -69,19 +61,11 @@ public class Media implements  CursorHandler, Parcelable {
     public Media(Uri mediaUri) {
         this.uriString = mediaUri.toString();
         this.path = null;
-//        this.mimeType = MimeTypeUtils.getMimeType(uriString);
     }
 
     public Media(@NotNull Cursor cur) {
-        //this.path = cur.getString(Integer.parseInt(MediaStore.Images.Media.DATA));
-        //this.dateModified = cur.getLong(Integer.parseInt(MediaStore.Images.Media.DATE_TAKEN));
-//        this.mimeType = cur.getString(CURSOR_POS_MIME_TYPE);
-        //this.size = cur.getLong(Integer.parseInt(MediaStore.Images.Media.SIZE));
-        //this.orientation = cur.getInt(Integer.parseInt(MediaStore.Images.Media.ORIENTATION));
-
         this.path = cur.getString(CURSOR_POS_DATA);
         this.dateModified = cur.getLong(CURSOR_POS_DATE_TAKEN);
-        //this.mimeType = cur.getString(CURSOR_POS_MIME_TYPE);
         this.size = cur.getLong(CURSOR_POS_SIZE);
         this.orientation = cur.getInt(CURSOR_POS_ORIENTATION);
     }
@@ -103,12 +87,6 @@ public class Media implements  CursorHandler, Parcelable {
         this.path = path;
     }
 
-//    public String getMimeType() {
-//        return mimeType;
-//    }
-
-    // TODO Calvin: Do not store adapter selection in a Media data class.
-    // This does not belong here.
     public boolean isSelected() {
         return selected;
     }
@@ -123,18 +101,6 @@ public class Media implements  CursorHandler, Parcelable {
         selected = !selected;
         return selected;
     }
-
-//    public boolean isGif() {
-//        return mimeType.endsWith("gif");
-//    }
-//
-//    public boolean isImage() {
-//        return mimeType.startsWith("image");
-//    }
-//
-//    public boolean isVideo() {
-//        return mimeType.startsWith("video");
-//    }
 
     public Uri getUri() {
         return uriString != null ? Uri.parse(uriString) : Uri.fromFile(new File(path));
@@ -168,8 +134,6 @@ public class Media implements  CursorHandler, Parcelable {
         return orientation;
     }
 
-    //<editor-fold desc="Exif & More">
-// TODO remove from here!
     @Deprecated
     public Bitmap getBitmap() {
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -188,10 +152,6 @@ public class Media implements  CursorHandler, Parcelable {
 
     @Deprecated
     private long getDateTaken() {
-        /*// TODO: 16/08/16 improved
-        Date dateOriginal = metadata.getDateOriginal();
-        if (dateOriginal != null) return metadata.getDateOriginal().getTime();
-        return -1;*/
         return 1;
     }
 
@@ -207,8 +167,6 @@ public class Media implements  CursorHandler, Parcelable {
         }
         return false;
     }
-
-    //</editor-fold>
 
     public File getFile() {
         if (path != null) {

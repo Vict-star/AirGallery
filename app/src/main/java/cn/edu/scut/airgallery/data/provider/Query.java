@@ -38,10 +38,6 @@ public class Query {
         if (sort != null)
             builder.append(sort);
 
-            // Sorting by Relative Position
-            // ORDER BY 1
-            // sort by the first column in the PROJECTION
-            // otherwise the LIMIT should not work
         else builder.append(1);
 
         builder.append(" ");

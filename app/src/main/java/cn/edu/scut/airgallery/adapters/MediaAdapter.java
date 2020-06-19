@@ -92,7 +92,6 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
                 notifyItemChanged(i);
             changed &= b;
         }
-
         selectedCount = 0;
         stopSelection();
         return changed;
@@ -170,10 +169,8 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.media_card)
         CardView card;
-
         @BindView(R.id.photo_preview)
         AppCompatImageView picture;
 

@@ -29,15 +29,6 @@ public class QueryUtils {
         });
     }
 
-    /**
-     * return only the first element if there is one
-     *
-     * @param q
-     * @param cr
-     * @param ch
-     * @param <T>
-     * @return
-     */
     public static <T> Observable<T> querySingle(Query q, ContentResolver cr, CursorHandler<T> ch) {
         return Observable.create(subscriber -> {
             Cursor cursor = null;

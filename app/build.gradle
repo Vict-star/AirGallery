@@ -57,16 +57,12 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'org.jetbrains:annotations:15.0'
-    // icons
-    implementation 'com.mikepenz:iconics-core:3.0.3@aar'
-    implementation "com.mikepenz:iconics-views:3.0.3@aar"
-    implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
-    implementation 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
-    implementation 'com.mikepenz:fontawesome-typeface:4.7.0.2@aar'
     //ui
-    implementation 'com.github.HoraApps:Liz:-SNAPSHOT'
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     //doodle
     implementation 'com.github.1993hzw:Doodle:5.5.3'
+    //ucrop
+    implementation 'com.github.yalantis:ucrop:2.2.2'
     //util
     implementation "com.orhanobut:hawk:2.0.1"
 
