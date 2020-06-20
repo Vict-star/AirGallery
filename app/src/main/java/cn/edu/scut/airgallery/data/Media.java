@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.bumptech.glide.signature.ObjectKey;
 
@@ -29,12 +30,14 @@ public class Media implements  CursorHandler, Parcelable {
 
     private static final int CURSOR_POS_DATA = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.DATA);
     private static final int CURSOR_POS_DATE_TAKEN = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.DATE_TAKEN);
+    private static final int CURSOR_POS_MIME_TYPE = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.MIME_TYPE);
     private static final int CURSOR_POS_SIZE = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.SIZE);
     private static final int CURSOR_POS_ORIENTATION = ArrayUtils.getIndex(sProjection, MediaStore.Images.Media.ORIENTATION);
 
     private String path = null;
     private long dateModified = -1;
     private int orientation = 0;
+    private String mimeType = "unknown/unknown";
 
     private String uriString = null;
 
@@ -66,6 +69,7 @@ public class Media implements  CursorHandler, Parcelable {
     public Media(@NotNull Cursor cur) {
         this.path = cur.getString(CURSOR_POS_DATA);
         this.dateModified = cur.getLong(CURSOR_POS_DATE_TAKEN);
+        this.mimeType = cur.getString(CURSOR_POS_MIME_TYPE);
         this.size = cur.getLong(CURSOR_POS_SIZE);
         this.orientation = cur.getInt(CURSOR_POS_ORIENTATION);
     }
@@ -213,4 +217,15 @@ public class Media implements  CursorHandler, Parcelable {
             return new Media[size];
         }
     };
+
+    public boolean isGif() {
+        String type = path.substring(path.length()-3,path.length());
+        return (type.equalsIgnoreCase("gif"));
+    }
+
+    public boolean isVedio() {
+        Log.v("type",mimeType);
+        return mimeType.startsWith("video");
+    }
+
 }

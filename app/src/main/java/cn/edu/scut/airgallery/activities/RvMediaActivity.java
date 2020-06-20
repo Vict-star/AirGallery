@@ -8,6 +8,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -123,4 +125,11 @@ public class RvMediaActivity extends AppCompatActivity implements ActionsListene
         }
     }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(getApplicationContext()).clearMemory();
+        Glide.get(getApplicationContext()).trimMemory(TRIM_MEMORY_COMPLETE);
+        System.gc();
+    }
 }

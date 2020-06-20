@@ -12,6 +12,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import java.util.ArrayList;
 
 import cn.edu.scut.airgallery.data.Media;
+import cn.edu.scut.airgallery.fragments.GifFragment;
 import cn.edu.scut.airgallery.fragments.ImageFragment;
 
 public class MediaPagerAdapter extends FragmentStatePagerAdapter {
@@ -27,6 +28,10 @@ public class MediaPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int pos) {
         Media media = this.media.get(pos);
+//        if(media.isVedio()) {
+//            return nullFragment.newInstance(media);
+//        }
+        if (media.isGif()) return GifFragment.newInstance(media);
         return ImageFragment.newInstance(media);
     }
 

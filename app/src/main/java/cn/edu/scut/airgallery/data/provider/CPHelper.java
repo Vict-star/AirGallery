@@ -42,13 +42,11 @@ public class CPHelper {
                 .ascending( false );
 
         ArrayList<Object> args = new ArrayList<>();
-        query.selection(String.format("%s=? or %s=?) group by (%s) %s ",
-                MediaStore.Files.FileColumns.MEDIA_TYPE,
+        query.selection(String.format("%s=?) group by (%s) %s ",
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
                 MediaStore.Files.FileColumns.PARENT,
                 getHavingCluause(excludedAlbums.size())));
         args.add(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
-        args.add(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO);
 
         for (String s : excludedAlbums)
             args.add(s+"%");
@@ -74,12 +72,9 @@ public class CPHelper {
                 .sort(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME)
                 .ascending(false);
 
-        query.selection(String.format("(%s=? or %s=?)",
-                MediaStore.Files.FileColumns.MEDIA_TYPE,
+        query.selection(String.format("%s=?",
                 MediaStore.Files.FileColumns.MEDIA_TYPE));
-        query.args(
-                MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
-                MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO);
+        query.args(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
 
         return QueryUtils.query(query.build(), context.getContentResolver(), new Media());
     }
