@@ -104,13 +104,11 @@ public class CPHelper {
                 .sort(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME)
                 .ascending(false);
 
-        query.selection(String.format("(%s=? or %s=?) and %s=?",
-                MediaStore.Files.FileColumns.MEDIA_TYPE,
+        query.selection(String.format("(%s=? ) and %s=?",
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
                 MediaStore.Files.FileColumns.PARENT));
         query.args(
                 MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
-                MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO,
                 album.getId());
 
         return QueryUtils.query(query.build(), context.getContentResolver(), Media::new);
