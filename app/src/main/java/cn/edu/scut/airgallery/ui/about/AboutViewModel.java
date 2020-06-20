@@ -10,7 +10,9 @@ public class AboutViewModel extends ViewModel {
 
     public AboutViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("2020字节跳动玩转客户端项目");
+        mText.setValue("2020字节跳动玩转客户端\n" +
+                "第三组项目\n" +
+                "zcf yzh lyz yjh\n");
     }
 
     public LiveData<String> getText() {
