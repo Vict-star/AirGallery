@@ -8,14 +8,6 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
-        tools:context=".activities.RvMediaActivity">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,6 +15,7 @@
 
             <include
                 android:id="@+id/toolbar"
+                android:theme="@style/AppTheme.AppBarOverlay"
                 layout="@layout/toolbar" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -34,5 +27,4 @@
                 android:scrollbars="vertical" />
         </LinearLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
