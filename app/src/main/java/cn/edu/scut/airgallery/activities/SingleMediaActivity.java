@@ -300,7 +300,7 @@ public class SingleMediaActivity extends AppCompatActivity implements BaseMediaF
     private void showSystemUI() {
         runOnUiThread(new Runnable() {
             public void run() {
-                toolbar.animate().translationY(Measure.getStatusBarHeight(getResources())).setInterpolator(new DecelerateInterpolator())
+                toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator())
                         .setDuration(240).start();
 
                 getWindow().getDecorView().setSystemUiVisibility(
